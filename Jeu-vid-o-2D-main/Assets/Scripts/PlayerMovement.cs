@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public int currentNumberJumps = 0;
     public bool isFacingRight = true;
 
+    public BoxCollider2D bc;
     public VoidEventChannel onPlayerDeath;
 
     private void OnEnable()
@@ -34,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     void Die()
     {
         bc.enabled = false;
-        rb.bodyType.GetType = Rigidbody2DType.Static;
+        rb.bodyType = RigidbodyType2D.Static;
         enabled = false;
     }
 
