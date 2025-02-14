@@ -3,11 +3,8 @@ using System.Collections;
 
 public class PlayerVie : MonoBehaviour
 {
-    // Points de vie maximum du joueur
-    public int maxLifePoints = 3;
-
-    // Points de vie actuels du joueur
-    public int currentLifePoints;
+    // Données du joueur
+    public PlayerData dataPlayer;
 
     // Paramètres d'invulnérabilité
     public bool isInvulnerable = false;
@@ -17,10 +14,16 @@ public class PlayerVie : MonoBehaviour
     // Référence au SpriteRenderer du joueur
     public SpriteRenderer sr;
 
+    public VoidEventChannel onPlayerDeath;
+
     void Start()
     {
-        // Initialise les points de vie actuels avec les points de vie maximum
-        currentLifePoints = maxLifePoints;
+        // Initialise les données du joueur
+        if (dataPlayer == null)
+        {
+            dataPlayer = ScriptableObject.CreateInstance<PlayerData>();
+        }
+        dataPlayer.currentLifePoints = dataPlayer.maxLifePoints;
     }
 
     // Méthode pour infliger des dégâts au joueur
@@ -29,12 +32,12 @@ public class PlayerVie : MonoBehaviour
         if (isInvulnerable) return;
 
         // Réduit les points de vie actuels en fonction des dégâts reçus
-        currentLifePoints -= damage;
+        dataPlayer.TakeDamage(damage);
 
         // Vérifie si les points de vie sont tombés à 0 ou moins
-        if (currentLifePoints <= 0)
+        if (dataPlayer.currentLifePoints <= 0)
         {
-            currentLifePoints = 0; // Empêche les points de vie d'être négatifs
+            onPlayerDeath.Raise();
             Die(); // Appelle la méthode pour gérer la mort du joueur
         }
         else
@@ -54,24 +57,16 @@ public class PlayerVie : MonoBehaviour
     IEnumerator Invulnerable()
     {
         isInvulnerable = true;
-        Color stratColor = sr.color;
+        Color startColor = sr.color;
 
-        WaitForSeconds invulnerableFlashWait= 
-        new WaitForSeconds (invulnerableFlash);
+        WaitForSeconds invulnerableFlashWait = new WaitForSeconds(invulnerableFlash);
 
         for (float i = 0; i < invulnerableTime; i += invulnerableFlash)
         {
-            if (sr.color.a == 1)
-            {
-                sr.color = Color.clear;
-            }
-            else
-            {
-                sr.color = stratColor;
-            }
-            yield return new WaitForSeconds(invulnerableFlash);
+            sr.color = sr.color.a == 1 ? Color.clear : startColor;
+            yield return invulnerableFlashWait;
         }
-       sr.color = stratColor; // Assure que le sprite est visible à la fin
+        sr.color = startColor; // Assure que le sprite est visible à la fin
         isInvulnerable = false;
     }
 }

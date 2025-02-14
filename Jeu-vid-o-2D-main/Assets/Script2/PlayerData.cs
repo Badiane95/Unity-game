@@ -1,8 +1,13 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewScriptableObjectScript", menuName = "Scriptable Objects/NewScriptableObjectScript")]
-public class NewScriptableObjectScript : ScriptableObject
+[CreateAssetMenu(fileName = "PlayerData", menuName = "Scriptable Objects/Player Data")]
+public class PlayerData : ScriptableObject
 {
-   public int currentLifepoints = 0 ; 
-   public int maxlifepoints = 3 ; s 
+   public int currentLifePoints = 0; 
+   public int maxLifePoints = 3; 
+
+   public void TakeDamage(int damage)
+   {
+       currentLifePoints = Mathf.Max(0, currentLifePoints - damage);
+   }
 }

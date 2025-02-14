@@ -11,23 +11,26 @@ public class BarreVie : MonoBehaviour
 
     // Gradient pour changer la couleur de la barre de vie en fonction du niveau de vie
     public Gradient lifeColorGradient;
+    
+        public PlayerData dataPlayer;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // Initialisation si nécessaire
+        // Assurez-vous que playerVie est assigné dans l'inspecteur Unity
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Calcul du ratio de vie actuelle
-        float lifeRatio = (float)playerVie.currentLifePoints / (float)playerVie.maxLifePoints;
+        if (playerVie != null && playerVie.dataPlayer != null)
+        {
+            // Calcul du ratio de vie actuelle
+            float lifeRatio = (float)playerVie.dataPlayer.currentLifePoints / (float)playerVie.dataPlayer.maxLifePoints;
 
-        // Mise à jour du remplissage de l'image
-        fillImage.fillAmount = lifeRatio;
+            // Mise à jour du remplissage de l'image
+            fillImage.fillAmount = lifeRatio;
 
-        // Mise à jour de la couleur de l'image en fonction du ratio de vie
-        fillImage.color = lifeColorGradient.Evaluate(lifeRatio);
+            // Mise à jour de la couleur de l'image en fonction du ratio de vie
+            fillImage.color = lifeColorGradient.Evaluate(lifeRatio);
+        }
     }
 }
