@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 63056237}
   - component: {fileID: 63056236}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,6 @@ GameObject:
   - component: {fileID: 249162461}
   - component: {fileID: 249162460}
   - component: {fileID: 249162459}
-  - component: {fileID: 249162463}
   m_Layer: 5
   m_Name: GameOver
   m_TagString: Untagged
@@ -268,20 +267,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &249162463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 249162458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6a45308e690e1a428cf94238df14540, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPaused: 1
-  pauseMenuUI: {fileID: 1255241166}
 --- !u!1 &323379869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1640,7 +1625,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1767274403}
   moveSpeed: 5
-  moveDirectionX: 0
   jumpForce: 7
   groundCheck: {fileID: 1198185402}
   groundCheckRadius: 0.2
@@ -1653,6 +1637,8 @@ MonoBehaviour:
   isFacingRight: 1
   bc: {fileID: 1767274407}
   onPlayerDeath: {fileID: 11400000, guid: e8d688add1297d84f9b54208d06b588b, type: 2}
+  pauseMenu: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!61 &1190902001
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1804,8 +1790,8 @@ Transform:
   m_GameObject: {fileID: 1198185401}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.13, y: -0.27, z: 0}
-  m_LocalScale: {x: 14.119078, y: -1.1907527, z: 1}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1767274406}
@@ -2481,8 +2467,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1547, y: 152}
-  m_SizeDelta: {x: 774.97705, y: 333.76086}
+  m_AnchoredPosition: {x: -1047, y: -547}
+  m_SizeDelta: {x: 796.4907, y: 370.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1443550684
 MonoBehaviour:
@@ -4997,7 +4983,7 @@ CompositeCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
@@ -5199,6 +5185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 249162458}
+  pause: {fileID: 1443550686}
   onPlayerDeath: {fileID: 11400000, guid: e8d688add1297d84f9b54208d06b588b, type: 2}
 --- !u!4 &1668846089
 Transform:
@@ -5308,7 +5295,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1767274403}
   moveSpeed: 5
-  moveDirectionX: 0
   jumpForce: 7
   groundCheck: {fileID: 1198185402}
   groundCheckRadius: 0.2
@@ -5321,6 +5307,8 @@ MonoBehaviour:
   isFacingRight: 1
   bc: {fileID: 1767274407}
   onPlayerDeath: {fileID: 11400000, guid: e8d688add1297d84f9b54208d06b588b, type: 2}
+  pauseMenu: {fileID: 1443550686}
+  animator: {fileID: 1767274409}
 --- !u!50 &1767274403
 Rigidbody2D:
   serializedVersion: 5
@@ -5393,7 +5381,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7166236263522030466, guid: b3b8d4d48d3a73b41b1094305515232a, type: 3}
-  m_Color: {r: 0.7169812, g: 0.38216448, b: 0.38216448, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5412,9 +5400,9 @@ Transform:
   m_GameObject: {fileID: 1767274401}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.6604, y: -3.1014, z: 0}
-  m_LocalScale: {x: 2.8929257, y: 2.5011191, z: 1.9071305}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 17.43, y: -3.07, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1198185402}
   - {fileID: 576971302}
@@ -5454,7 +5442,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.21133333}
+  m_Offset: {x: 0, y: 0.07}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}

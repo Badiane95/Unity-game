@@ -4,11 +4,11 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
     public float moveSpeed = 5f;
-    public float moveDirectionX = 0f;
+    private float moveDirectionX = 0f;
     public float jumpForce = 7f;
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
-    public bool isGrounded = false;
+    public bool isGrounded;
     public LayerMask listGroundLayers;
     public int maxAllowedJumps = 2;
     public int currentNumberJumps = 0;
@@ -16,6 +16,9 @@ public class PlayerMovement : MonoBehaviour
 
     public BoxCollider2D bc;
     public VoidEventChannel onPlayerDeath;
+    public PauseMenu pauseMenu; // Référence au script PauseMenu
+
+    public Animator animator;
 
     private void OnEnable()
     {
@@ -29,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        // Initialisation ou configuration supplémentaire si nécessaire
+        // Assurez-vous d'assigner la référence au PauseMenu dans l'éditeur Unity
     }
 
     void Die()
@@ -41,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (pauseMenu != null && pauseMenu.isPaused)
+            return;
+
         moveDirectionX = Input.GetAxis("Horizontal");
 
         if (Input.GetButtonDown("Jump") && currentNumberJumps < maxAllowedJumps)
@@ -55,14 +61,21 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Flip();
+
+        // Mise à jour des paramètres de l'animator
+        animator.SetFloat("VelocityX", Mathf.Abs(rb.linearVelocity.x));
+        animator.SetFloat("VelocityY", rb.linearVelocity.y);
+        animator.SetBool("isGrounded", isGrounded); // Utilisez SetBool si votre paramètre est un booléen
     }
 
     void Flip()
     {
         if ((moveDirectionX > 0 && !isFacingRight) || (moveDirectionX < 0 && isFacingRight))
         {
-            transform.Rotate(0f, 180f, 0f);
             isFacingRight = !isFacingRight;
+            Vector3 scale = transform.localScale;
+            scale.x *= -1;
+            transform.localScale = scale;
         }
     }
 
