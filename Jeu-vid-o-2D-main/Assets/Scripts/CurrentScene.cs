@@ -6,6 +6,8 @@ public class CurrentScene : MonoBehaviour
     private bool isPaused = false;
 
     public GameObject game;
+    
+    public PauseMenu pause;
 
     public VoidEventChannel onPlayerDeath;
 
